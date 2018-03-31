@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FIFA Project</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/nvd3.css">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+
+    <div id="root">
+            <v-app dark>
+                <v-content >
+                        <v-toolbar fixed>                          
+                                <v-toolbar-title>This is FIFA 18 Players Rating</v-toolbar-title>
+                        </v-toolbar>
+                    <v-container>
+                           <v-layout row>
+                                    <v-btn v-on:click="loadAPI" color="success" class="load_btn" small>Load Data</v-btn>
+                           </v-layout>
+                           <v-select
+                           color="success"
+                           :items="apiData.nations"
+                           v-if="dataLoaded"
+                           v-model="selectedCountry"
+                           label="Select"
+                           single-line
+                         ></v-select>
+                           <!-- <pre>{{$data}}</pre> -->
+                    </v-container>
+                    <v-container>
+                </v-content >
+                <v-content v-if="selectedCountry">  
+                        <v-container>  
+                     <table>
+                        <tr >
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Club</th>
+                            <th>Overall</th>
+                        </tr>
+                        <tr v-on:click="openDialog(player)" class="hoverable" v-for="player in apiData.top_10s[selectedCountry]">
+                            <td><h4><strong>{{player.name}}</strong></h4></td>
+                            <td><h4><strong>{{player.age}}</strong></h4></td>
+                            <td><h4>{{player.club}}</h4></td>
+                            <td><h4><i>{{player.overall}}</i></h4></td>
+                        </tr>
+                    </table> 
+                    </v-container>
+                   <v-dialog v-model="playerDialog" persistent max-width="900" v-if="selectedPlayer">
+                          
+                            <v-card>
+                              <v-card-title class="headline">
+                                    <v-toolbar color="success">
+                                            <v-toolbar-title>
+                                                    {{selectedPlayer.name}}'s Data
+                                            </v-toolbar-title>
+                                          </v-toolbar>
+                                 
+                                </v-card-title>
+                              <v-card-text>
+                                    <div id="chart">
+                                            <svg></svg>
+                                    </div>
+                              </v-card-text>
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="success"  @click.native="playerDialog = false">Close</v-btn>
+                              </v-card-actions>
+                            </v-card>
+                    </v-dialog> 
+                </v-content>
+            </v-app>
+           
+    </div>
+
+    <script src="/scripts/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.0"></script>
+    <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+    <script src="/scripts/d3v3.js"></script>
+    <script src="/scripts/nvd3_181.js"></script>
+    <script src="/scripts/chart.js"></script>
+    <script src="/scripts/app.js"></script>
+</body>
+</html>

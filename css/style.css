@@ -1,0 +1,29 @@
+table{
+    width: 100%;
+    text-align: center;
+}
+
+table th,table tr td{
+    border-bottom: 2px solid white;
+    padding: 15px
+}
+
+.load_btn{
+    margin-top: 100px;
+}
+table tr{
+    transition: 0.5s;
+}
+table .hoverable:hover{
+    cursor: pointer;
+    background: lightgray;
+    color:black;
+    transform: scale(1.02);
+    box-shadow:1px 1px 1px gray;
+}
+
+
+#chart svg {
+    height: 500px;
+  }
+  
